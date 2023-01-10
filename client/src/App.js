@@ -1,9 +1,11 @@
 import React, {createContext, useEffect} from 'react';
 import Button from '@mui/material/Button';
 import {AppBar, Box, Toolbar, Typography} from '@mui/material';
-import {Link} from 'react-router-dom';
+import {Route, Routes, Link} from 'react-router-dom';
 import {AppContext} from './index';
 import appConstants from './consts';
+import Auth from './pages/Auth';
+import {adminsPath, clientsPath, publicPath, workersPath} from './routes';
 
 function App() {
   const {user} = React.useContext(AppContext);
@@ -15,44 +17,88 @@ function App() {
         <Box sx={{flexGrow: 1}}>
           <AppBar position="static">
             <Toolbar sx={{display: 'flex', justifyContent: 'space-between'}}>
-              <Box sx={{display: 'flex'}}>
+              <Link to="/">
                 <Typography variant="h6" component="div">
                   Перукарня
                 </Typography>
-                <Button color="inherit" sx={{marginLeft: 5}}>
-                  <Link>
-                    Відгуки
-                  </Link>
-                </Button>
-                {user === appConstants.CLIENT && (
-                    <Button color="inherit">
-                      <Link>
-                        Запис
-                      </Link>
-                    </Button>
-                )}
-              </Box>
-              <Box sx={{display: 'flex'}}>
-                {
-                    user === appConstants.NONE && (
-                        <>
-                          <Button color="secondary">
-                            <Link>
-                              Увійти
+              </Link>
+              <Box>
+                {user === appConstants.CLIENT &&
+                    clientsPath.map(({path, title}) => (
+                            <Link to={path}>
+                              <Button color="inherit" key={path}>
+                                {title}
+                              </Button>
                             </Link>
-                          </Button>
-                          <Button color="secondary">
-                            <Link>
-                              Реєстрація
+                        ),
+                    )}
+                {user === appConstants.NONE &&
+                    publicPath.map(({path, title}) => (
+                            <Link to={path}>
+                              <Button color="inherit" key={path}>
+                                {title}
+                              </Button>
                             </Link>
-                          </Button>
-                        </>
+                        ),
                     )
                 }
+                {user === appConstants.WORKER &&
+                    workersPath.map(({path, title}) => (
+                            <Link to={path}>
+                              <Button color="inherit" key={path}>
+                                {title}
+                              </Button>
+                            </Link>
+                        ),
+                    )
+                }
+                {user === appConstants.ADMIN &&
+                    adminsPath.map(({path, title}) => (
+                            <Link to={path}>
+                              <Button color="inherit" key={path}>
+                                {title}
+                              </Button>
+                            </Link>
+                        ),
+                    )
+                }
+                {user !== appConstants.NONE && (
+                    <Button color="inherit">
+                      Вийти
+                    </Button>
+                )}
               </Box>
             </Toolbar>
           </AppBar>
         </Box>
+
+        <Routes>
+          {user === appConstants.ADMIN &&
+              adminsPath.map(({path, Component}) => (
+                      <Route path={path} element={<Component/>}/>
+                  ),
+              )
+          }
+          {user === appConstants.WORKER &&
+              workersPath.map(({path, Component}) => (
+                      <Route path={path} element={<Component/>}/>
+                  ),
+              )
+          }
+          {user === appConstants.CLIENT &&
+              clientsPath.map(({path, Component}) => (
+                      <Route path={path} element={<Component/>}/>
+                  ),
+              )
+          }
+          {user === appConstants.NONE &&
+              publicPath.map(({path, title, Component}) => (
+                      <Route path={path} element={<Component/>}/>
+                  ),
+              )
+          }
+
+        </Routes>
       </div>
   );
 }
