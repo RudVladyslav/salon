@@ -8,7 +8,7 @@ export const User = sequelize.define('user', {
   password: {type: DataTypes.STRING},
   firstName: {type: DataTypes.STRING, allowNull: false},
   lastName: {type: DataTypes.STRING, allowNull: false},
-  image: {type: DataTypes.STRING, allowNull: false, defaultValue: ''},
+  phone: {type: DataTypes.INTEGER, allowNull: false},
 });
 
 export const Order = sequelize.define('order', {

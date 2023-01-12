@@ -15,7 +15,7 @@ root.render(
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <AppContext.Provider value={{
-          user: 'WORKER',
+          user: 'NONE',
         }}>
           <App/>
         </AppContext.Provider>

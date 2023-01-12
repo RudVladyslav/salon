@@ -4,14 +4,11 @@ import {AppBar, Box, Toolbar, Typography} from '@mui/material';
 import {Route, Routes, Link} from 'react-router-dom';
 import {AppContext} from './index';
 import appConstants from './consts';
-import Auth from './pages/Auth';
 import {adminsPath, clientsPath, publicPath, workersPath} from './routes';
 
 function App() {
   const {user} = React.useContext(AppContext);
-  useEffect(() => {
-    console.log(user);
-  }, []);
+
   return (
       <div>
         <Box sx={{flexGrow: 1}}>
@@ -92,7 +89,7 @@ function App() {
               )
           }
           {user === appConstants.NONE &&
-              publicPath.map(({path, title, Component}) => (
+              publicPath.map(({path, Component}) => (
                       <Route path={path} element={<Component/>}/>
                   ),
               )

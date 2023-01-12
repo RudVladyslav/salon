@@ -3,22 +3,23 @@ import Review from './pages/Review';
 import Workers from './pages/Workers';
 import Orders from './pages/Orders';
 import ToOrder from './pages/ToOrder';
+import appConstants from './consts';
 
 export const publicPath = [
-  {path: '/review', title: 'Відгуки', Component: Review},
-  {path: '/login', title: 'Увійти', Component: Auth},
-  {path: '/registration', title: 'Реєстрація', Component: Auth},
+  {path: appConstants.PATH.REVIEW, title: 'Відгуки', Component: Review},
+  {path: appConstants.PATH.LOGIN, title: 'Увійти', Component: Auth},
+  {path: appConstants.PATH.REGISTRATION, title: 'Реєстрація', Component: Auth},
 ];
 
 export const adminsPath = [
-  {path: '/workers', title: 'Працівники', Component: Workers},
+  {path: appConstants.PATH.WORKERS, title: 'Працівники', Component: Workers},
 ];
 
 export const workersPath = [
-  {path: '/orders', title: 'Ваші записи', Component: Orders},
+  {path: appConstants.PATH.ORDERS, title: 'Ваші записи', Component: Orders},
 ];
 
 export const clientsPath = [
-  {path: '/review', title: 'Відгуки', Component: Review},
-  {path: '/to_order', title: 'Запис', Component: ToOrder},
+  {path: appConstants.PATH.REVIEW, title: 'Відгуки', Component: Review},
+  {path: appConstants.PATH.TO_ORDER, title: 'Запис', Component: ToOrder},
 ];
