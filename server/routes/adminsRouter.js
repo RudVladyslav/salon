@@ -17,4 +17,10 @@ adminRouter.get(
     AdminController.getAllWorkers,
 );
 
+adminRouter.delete(
+    '/worker/:id',
+    handleValidationErrors,
+    AdminController.deleteOneDelete,
+);
+
 export default adminRouter;

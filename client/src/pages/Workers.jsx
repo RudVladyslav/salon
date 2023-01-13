@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {fetchGetWorkers} from '../http/fetchMethods';
+import {fetchDeleteWorkers, fetchGetWorkers} from '../http/fetchMethods';
 import {
   Paper, Table, TableBody,
   TableCell,
@@ -19,13 +19,18 @@ const Workers = () => {
     try{
       const data = await fetchGetWorkers()
       setWorkers(data)
-      console.log(data);
     }catch (e) {
       console.log(e);
     }
   }
 
-  const onClickDeleteWorker = () => {
+  const onClickDeleteWorker = async (id) => {
+    try{
+      const data = await fetchDeleteWorkers(id)
+      console.log(data);
+    }catch (e) {
+      console.log(e);
+    }
 
   }
 
@@ -60,7 +65,7 @@ const Workers = () => {
                     <TableCell align="center">{row.phone}</TableCell>
                     <TableCell align="center">{row.email}</TableCell>
                     <TableCell align="center">
-                      <Button variant='outlined' color="error" sx={{ marginRight: 1 }}>
+                      <Button variant='outlined' color="error" sx={{ marginRight: 1 }} onClick={() => onClickDeleteWorker(row.id)}>
                         <DeleteIcon />
                       </Button>
                       <Button variant='outlined' color="warning">

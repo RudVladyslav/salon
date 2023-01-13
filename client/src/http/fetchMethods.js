@@ -34,3 +34,12 @@ export const fetchGetWorkers = async (values) => {
     console.log(error);
   }
 }
+
+export const fetchDeleteWorkers = async (id) => {
+  try {
+    const {data} = await axios.delete(`/admin/worker/${id}`)
+    return data
+  } catch (error) {
+    console.log(error);
+  }
+}
