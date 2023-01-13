@@ -9,6 +9,7 @@ export const User = sequelize.define('user', {
   firstName: {type: DataTypes.STRING, allowNull: false},
   lastName: {type: DataTypes.STRING, allowNull: false},
   phone: {type: DataTypes.INTEGER, allowNull: false},
+  email: {type: DataTypes.STRING, allowNull: false},
 });
 
 export const Order = sequelize.define('order', {

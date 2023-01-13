@@ -8,7 +8,6 @@ class AdminController {
       const workers = await User.findAll({
         where: {role:'WORKER'}
       })
-
       res.status(201).json(workers);
 
     } catch (e) {
