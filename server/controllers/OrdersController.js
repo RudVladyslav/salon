@@ -1,14 +1,22 @@
-import {Order} from '../models/models.js';
+import {Order, User} from '../models/models.js';
 
 class OrdersController {
   async getOrders(req, res, next) {
     try {
       const {id} = req.user;
-
-      const orders = Order.findAll({
+      const orders = await Order.findAll({
         where: {
           workerId: id,
         },
+        include: [
+          {
+            model: User,
+            attributes:[
+              'firstName' ,'lastName' ,'phone', 'email'
+            ]
+          },
+
+        ]
       });
 
       res.status(201).json(orders);
@@ -25,7 +33,7 @@ class OrdersController {
       const {workerId, date} = req.body;
 
       await Order.create({
-        clientId: id,
+        userId: id,
         workerId,
         date,
       });

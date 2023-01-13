@@ -61,3 +61,12 @@ export const fetchCreateOrders = async (values) => {
     console.log(error);
   }
 }
+
+export const fetchCreateReview = async (values) => {
+  try {
+    const {data} = await axios.post(`/review/`, values)
+    return data
+  } catch (error) {
+    console.log(error);
+  }
+}

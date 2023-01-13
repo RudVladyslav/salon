@@ -28,7 +28,6 @@ const Workers = () => {
   const onClickDeleteWorker = async (id) => {
     try{
       const {message} = await fetchDeleteWorkers(id)
-      console.log(workers);
       const updatedWorkers = [...workers].filter(worker => worker.id !== id)
       setWorkers(updatedWorkers)
       toast(message);

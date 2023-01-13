@@ -8,5 +8,6 @@ const router = new Router();
 router.use('/auth', authRouter)
 router.use('/admin', adminRouter)
 router.use('/orders', ordersRouter)
+router.use('/review', reviewRouter)
 
 export default router;

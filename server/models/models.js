@@ -15,7 +15,7 @@ export const User = sequelize.define('user', {
 export const Order = sequelize.define('order', {
   id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
   date: {type: DataTypes.STRING, allowNull: false},
-  clientId:{type: DataTypes.INTEGER, allowNull: false},
+  userId:{type: DataTypes.INTEGER, allowNull: false},
   workerId: {type: DataTypes.INTEGER, allowNull: false},
 });
 
