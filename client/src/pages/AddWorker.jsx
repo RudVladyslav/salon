@@ -4,6 +4,7 @@ import appConstants from '../utils/consts';
 import Button from '@mui/material/Button';
 import {useForm} from 'react-hook-form';
 import {fetchCreateWorker} from '../http/fetchMethods';
+import {toast} from 'react-toastify';
 
 const defaultValuesRegistration = Object.freeze({
   login: '',
@@ -15,7 +16,6 @@ const defaultValuesRegistration = Object.freeze({
 });
 
 const AddWorker = () => {
-
   const {
     register,
     handleSubmit,
@@ -27,8 +27,8 @@ const AddWorker = () => {
 
   const onSubmit = async (values) => {
     try {
-      const data = await fetchCreateWorker(values);
-      console.log(data);
+      const {message} = await fetchCreateWorker(values);
+      toast(message);
     } catch (e) {
       console.log(e);
     }

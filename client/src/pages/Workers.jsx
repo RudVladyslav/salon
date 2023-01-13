@@ -10,6 +10,7 @@ import {
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import {toast} from 'react-toastify';
 
 const Workers = () => {
 
@@ -26,8 +27,11 @@ const Workers = () => {
 
   const onClickDeleteWorker = async (id) => {
     try{
-      const data = await fetchDeleteWorkers(id)
-      console.log(data);
+      const {message} = await fetchDeleteWorkers(id)
+      console.log(workers);
+      const updatedWorkers = [...workers].filter(worker => worker.id !== id)
+      setWorkers(updatedWorkers)
+      toast(message);
     }catch (e) {
       console.log(e);
     }
@@ -58,7 +62,7 @@ const Workers = () => {
             <TableBody>
               {workers.map((row) => (
                   <TableRow
-                      key={row.name}
+                      key={row.id}
                   >
                     <TableCell align="center">{row.firstName}</TableCell>
                     <TableCell align="center">{row.lastName}</TableCell>

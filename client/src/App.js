@@ -7,6 +7,7 @@ import appConstants from './utils/consts';
 import {adminsPath, clientsPath, publicPath, workersPath} from './utils/routes';
 import {decodeToken} from 'react-jwt';
 import consts from './utils/consts';
+import Alert from './components/alert';
 
 function App() {
 const [user, setUser] = useState(consts.NONE)
@@ -25,6 +26,7 @@ const [user, setUser] = useState(consts.NONE)
         changeUser: setUser,
       }}>
         <div>
+          <Alert/>
           <Box sx={{flexGrow: 1}}>
             <AppBar position="static">
               <Toolbar sx={{display: 'flex', justifyContent: 'space-between'}}>

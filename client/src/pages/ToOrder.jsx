@@ -3,16 +3,27 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import {Box, MenuItem, TextField, Typography} from '@mui/material';
 import Button from '@mui/material/Button';
-import {fetchGetWorkers} from '../http/fetchMethods';
+import {fetchCreateOrders, fetchGetWorkers} from '../http/fetchMethods';
+import {toast} from 'react-toastify';
 
 const ToOrder = () => {
   const [value, onChange] = useState(new Date());
+  const [chosenWorker, setChosenWorker] = useState('')
+
   const [workers, setWorkers] = useState([])
 
   const fetchWorkers = async () => {
     const data = await fetchGetWorkers()
-    console.log(data);
     setWorkers(data)
+  }
+
+  const onClickToOrder = async (values) => {
+    try{
+      const {message} = await fetchCreateOrders(values)
+      toast(message)
+    }catch (e) {
+      console.log(e);
+    }
   }
 
   useEffect(() => {
@@ -27,7 +38,11 @@ const ToOrder = () => {
         </Typography>
         <form onSubmit={(e) => {
           e.preventDefault();
-          console.log('csnckn');
+          const formData = {
+            workerId: chosenWorker,
+            date: value
+          }
+          onClickToOrder(formData)
         }}>
           <Box sx={{
             display: 'flex',
@@ -44,9 +59,10 @@ const ToOrder = () => {
                   defaultValue=""
                   helperText="Оберіть перукаря"
                   sx={{width: '300px'}}
+
               >
                 {workers.map((option) => (
-                    <MenuItem key={option.firstName} sx={{color: '#000'}} value={`${option.firstName} ${option.lastName}`}>
+                    <MenuItem onClick={() => setChosenWorker(option.id)} key={option.firstName} sx={{color: '#000'}} value={`${option.firstName} ${option.lastName}`}>
                       {`${option.firstName} ${option.lastName}`}
                     </MenuItem>
                 ))}

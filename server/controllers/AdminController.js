@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import {User} from '../models/models.js';
+import {where} from 'sequelize';
 
 class AdminController {
   async getAllWorkers(req, res, next) {
@@ -80,7 +81,8 @@ class AdminController {
   async deleteOneDelete(req, res, next) {
     try {
       const workerId = req.params.id;
-      const worker = await User.findOne({id: workerId});
+      console.log(req.params.id);
+      const worker = await User.findOne({where: {id: workerId}});
       await worker.destroy();
       res.status(201).json({message: 'Працівника видалено!'});
     } catch (e) {

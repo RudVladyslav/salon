@@ -43,3 +43,21 @@ export const fetchDeleteWorkers = async (id) => {
     console.log(error);
   }
 }
+
+export const fetchGetOrders = async (value) => {
+  try {
+    const {data} = await axios.get(`/orders/`)
+    return data
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const fetchCreateOrders = async (values) => {
+  try {
+    const {data} = await axios.post(`/orders/`, values)
+    return data
+  } catch (error) {
+    console.log(error);
+  }
+}

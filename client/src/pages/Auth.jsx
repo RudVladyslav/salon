@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import {fetchAuthenticate, fetchRegister} from '../http/fetchMethods';
 import {decodeToken} from 'react-jwt';
 import {AppContext} from '../index';
+import {toast} from 'react-toastify';
 
 const defaultValuesRegistration = Object.freeze({
   login: '',
@@ -45,7 +46,8 @@ const Auth = () => {
 
   const onSubmit = async (values) => {
     if (pathname === appConstants.PATH.REGISTRATION) {
-      const data = await fetchRegister(values);
+      const {data} = await fetchRegister(values);
+      toast(data.message);
     } else {
       const {token} = await fetchAuthenticate(values)
       if (token) {
