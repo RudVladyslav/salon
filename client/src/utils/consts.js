@@ -8,6 +8,7 @@ const appConstants = Object.freeze({
     REGISTRATION: '/registration',
     REVIEW:'/review',
     WORKERS:'/workers',
+    ADD_WORKERS: '/add_worker',
     ORDERS:'/orders',
     TO_ORDER: 'to_order',
   }

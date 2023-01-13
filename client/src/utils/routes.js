@@ -13,6 +13,7 @@ export const publicPath = [
 
 export const adminsPath = [
   {path: appConstants.PATH.WORKERS, title: 'Працівники', Component: Workers},
+  {path: appConstants.PATH.ADD_WORKERS, title: 'Створити працівника', Component: Workers},
 ];
 
 export const workersPath = [
