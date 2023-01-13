@@ -4,6 +4,7 @@ import Workers from '../pages/Workers';
 import Orders from '../pages/Orders';
 import ToOrder from '../pages/ToOrder';
 import appConstants from './consts';
+import AddWorker from '../pages/AddWorker';
 
 export const publicPath = [
   {path: appConstants.PATH.REVIEW, title: 'Відгуки', Component: Review},
@@ -13,7 +14,7 @@ export const publicPath = [
 
 export const adminsPath = [
   {path: appConstants.PATH.WORKERS, title: 'Працівники', Component: Workers},
-  {path: appConstants.PATH.ADD_WORKERS, title: 'Створити працівника', Component: Workers},
+  {path: appConstants.PATH.ADD_WORKERS, title: 'Створити працівника', Component: AddWorker},
 ];
 
 export const workersPath = [

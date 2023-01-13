@@ -19,8 +19,9 @@ export const Order = sequelize.define('order', {
 
 export const Review = sequelize.define('order', {
   id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-  date: {type: DataTypes.STRING, allowNull: false},
   workerId: {type: DataTypes.INTEGER, allowNull: false},
+  userId: {type: DataTypes.INTEGER, allowNull: false},
+  text: {type: DataTypes.STRING, allowNull: false},
 });
 
 User.hasMany(Order);

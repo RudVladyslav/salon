@@ -16,3 +16,21 @@ export const fetchAuthenticate = async (values) => {
     console.log(error);
   }
 }
+
+export const fetchCreateWorker = async (values) => {
+  try {
+    const {data} = await axios.post('/admin/worker', values)
+    return data
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const fetchGetWorkers = async (values) => {
+  try {
+    const {data} = await axios.get('/admin/worker')
+    return data
+  } catch (error) {
+    console.log(error);
+  }
+}

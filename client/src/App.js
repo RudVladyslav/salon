@@ -36,8 +36,8 @@ const [user, setUser] = useState(consts.NONE)
                 <Box>
                   {user === appConstants.CLIENT &&
                       clientsPath.map(({path, title}) => (
-                              <Link to={path}>
-                                <Button color="inherit" key={path}>
+                              <Link key={path} to={path}>
+                                <Button color="inherit">
                                   {title}
                                 </Button>
                               </Link>
@@ -45,8 +45,8 @@ const [user, setUser] = useState(consts.NONE)
                       )}
                   {user === appConstants.NONE &&
                       publicPath.map(({path, title}) => (
-                              <Link to={path}>
-                                <Button color="inherit" key={path}>
+                              <Link key={path} to={path}>
+                                <Button color="inherit">
                                   {title}
                                 </Button>
                               </Link>
@@ -55,8 +55,8 @@ const [user, setUser] = useState(consts.NONE)
                   }
                   {user === appConstants.WORKER &&
                       workersPath.map(({path, title}) => (
-                              <Link to={path}>
-                                <Button color="inherit" key={path}>
+                              <Link key={path} to={path}>
+                                <Button color="inherit">
                                   {title}
                                 </Button>
                               </Link>
@@ -65,8 +65,8 @@ const [user, setUser] = useState(consts.NONE)
                   }
                   {user === appConstants.ADMIN &&
                       adminsPath.map(({path, title}) => (
-                              <Link to={path}>
-                                <Button color="inherit" key={path}>
+                              <Link key={path} to={path}>
+                                <Button color="inherit">
                                   {title}
                                 </Button>
                               </Link>
@@ -89,25 +89,25 @@ const [user, setUser] = useState(consts.NONE)
           <Routes>
             {user === appConstants.ADMIN &&
                 adminsPath.map(({path, Component}) => (
-                        <Route path={path} element={<Component/>}/>
+                        <Route path={path} key={path} element={<Component/>}/>
                     ),
                 )
             }
             {user === appConstants.WORKER &&
                 workersPath.map(({path, Component}) => (
-                        <Route path={path} element={<Component/>}/>
+                        <Route path={path} key={path} element={<Component/>}/>
                     ),
                 )
             }
             {user === appConstants.CLIENT &&
                 clientsPath.map(({path, Component}) => (
-                        <Route path={path} element={<Component/>}/>
+                        <Route path={path} key={path} element={<Component/>}/>
                     ),
                 )
             }
             {user === appConstants.NONE &&
                 publicPath.map(({path, Component}) => (
-                        <Route path={path} element={<Component/>}/>
+                        <Route path={path} key={path} element={<Component/>}/>
                     ),
                 )
             }

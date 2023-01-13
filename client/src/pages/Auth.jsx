@@ -20,10 +20,6 @@ const defaultValuesRegistration = Object.freeze({
 const defaultValuesLogin = Object.freeze({
   login: '',
   password: '',
-  email: '',
-  phone: '',
-  firstName: '',
-  lastName: '',
 });
 
 const Auth = () => {
