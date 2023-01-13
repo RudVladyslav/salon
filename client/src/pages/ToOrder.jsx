@@ -3,13 +3,21 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import {Box, MenuItem, TextField, Typography} from '@mui/material';
 import Button from '@mui/material/Button';
+import {fetchGetWorkers} from '../http/fetchMethods';
 
 const ToOrder = () => {
   const [value, onChange] = useState(new Date());
-  const currencies = ['xaxaxaxax', 'ccsbchs', 'chsbbhcs'];
-  useEffect(() => {
+  const [workers, setWorkers] = useState([])
 
-  }, [value]);
+  const fetchWorkers = async () => {
+    const data = await fetchGetWorkers()
+    console.log(data);
+    setWorkers(data)
+  }
+
+  useEffect(() => {
+    fetchWorkers()
+  }, []);
 
   return (
       <div>
@@ -28,21 +36,24 @@ const ToOrder = () => {
             marginTop: 5,
           }}>
             <Calendar onChange={onChange} value={value}/>
-            <Box sx={{marginLeft: 10}}>
+            <Box sx={{marginLeft: 10, display: 'flex', flexDirection: 'column'}}>
               <TextField
                   id="outlined-select-currency"
                   select
                   label="Натисніть"
-                  defaultValue="EUR"
+                  defaultValue=""
                   helperText="Оберіть перукаря"
                   sx={{width: '300px'}}
               >
-                {currencies.map((option) => (
-                    <MenuItem key={option} sx={{color: '#000'}} value={option}>
-                      {option}
+                {workers.map((option) => (
+                    <MenuItem key={option.firstName} sx={{color: '#000'}} value={`${option.firstName} ${option.lastName}`}>
+                      {`${option.firstName} ${option.lastName}`}
                     </MenuItem>
                 ))}
               </TextField>
+              <Typography variant='p' sx={{ marginTop: 10, fontSize: '18px'  }}>
+                Зробіть запис та наш менеджер з вами зв'яжеться
+              </Typography>
             </Box>
           </Box>
           <Box sx={{display: 'flex', justifyContent: 'center', marginTop: 6}}>
