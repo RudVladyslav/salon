@@ -1,8 +1,8 @@
-import Auth from './pages/Auth';
-import Review from './pages/Review';
-import Workers from './pages/Workers';
-import Orders from './pages/Orders';
-import ToOrder from './pages/ToOrder';
+import Auth from '../pages/Auth';
+import Review from '../pages/Review';
+import Workers from '../pages/Workers';
+import Orders from '../pages/Orders';
+import ToOrder from '../pages/ToOrder';
 import appConstants from './consts';
 
 export const publicPath = [

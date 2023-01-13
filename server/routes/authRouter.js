@@ -18,7 +18,7 @@ authRouter.post(
 
 authRouter.post(
     '/authenticate',
-    authenticateValidation,
+    // authenticateValidation,
     handleValidationErrors,
     AuthController.authenticate,
 );

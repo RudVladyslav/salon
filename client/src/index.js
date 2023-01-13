@@ -7,18 +7,15 @@ import {theme} from './theme';
 import {BrowserRouter} from 'react-router-dom';
 
 export const AppContext = createContext({
-  user: 'NONE'
+  user: 'NONE',
+  changeUser: () => {}
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <BrowserRouter>
       <ThemeProvider theme={theme}>
-        <AppContext.Provider value={{
-          user: 'NONE',
-        }}>
           <App/>
-        </AppContext.Provider>
       </ThemeProvider>
     </BrowserRouter>
 );

@@ -2,9 +2,9 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import {User} from '../models/models.js';
 
-const generateJwtToken = (id, email) => jwt.sign({
+const generateJwtToken = (id, role) => jwt.sign({
   id: id,
-  email: email,
+  role: role,
 }, process.env.SECRET_KEY, {expiresIn: '12h'});
 
 
@@ -36,6 +36,7 @@ class AuthController {
       res.status(201).json({message: 'Рєстрація успішна!'});
 
     } catch (e) {
+      console.log(e)
       res.status(500).json({message: 'Не вдалось зареєструватись'});
     }
   }
@@ -54,7 +55,7 @@ class AuthController {
         return res.status(400).json({message: 'Логін або пароль неправильний'});
       }
 
-      const token = generateJwtToken(user.id, user.login, user.role);
+      const token = generateJwtToken(user.id, user.role);
       return res.json({token});
 
     } catch (e) {

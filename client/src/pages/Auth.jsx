@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useLocation} from 'react-router-dom';
-import appConstants from '../consts';
+import appConstants from '../utils/consts';
 import {TextField, Typography} from '@mui/material';
 import {useForm} from 'react-hook-form';
 import Button from '@mui/material/Button';
+import {fetchAuthenticate, fetchRegister} from '../http/fetchMethods';
+import {decodeToken} from 'react-jwt';
+import {AppContext} from '../index';
 
 const defaultValuesRegistration = Object.freeze({
   login: '',
@@ -25,10 +28,15 @@ const defaultValuesLogin = Object.freeze({
 
 const Auth = () => {
   const {pathname} = useLocation();
+  const {changeUser} = React.useContext(AppContext);
 
-  const defaultValues = pathname === appConstants.PATH.REGISTRATION
-      ? defaultValuesRegistration
-      : defaultValuesLogin
+  const [defaultValues, setDefaultValues] = useState({})
+
+  useEffect(() => {
+    pathname === appConstants.PATH.REGISTRATION
+        ? setDefaultValues(defaultValuesRegistration)
+        : setDefaultValues(defaultValuesLogin);
+  }, [appConstants.PATH.REGISTRATION])
 
   const {
     register,
@@ -39,17 +47,26 @@ const Auth = () => {
     mode: 'onChange',
   });
 
-  const onSubmit = (values) => {
-    console.log(values);
+  const onSubmit = async (values) => {
+    if (pathname === appConstants.PATH.REGISTRATION) {
+      const data = await fetchRegister(values);
+    } else {
+      const {token} = await fetchAuthenticate(values)
+      if (token) {
+        window.localStorage.setItem('token', token)
+        const {role} = await decodeToken(token)
+        changeUser(role)
+      }
+    }
   };
 
   return (
-      <div>
-        <Typography sx={{marginX: 'auto'}} component="div">
-          socssconscns
+      <>
+        <Typography sx={{textAlign: 'center', marginTop: 2}} variant="h3" component="h3">
+          {pathname === appConstants.PATH.REGISTRATION ? 'Реєстрація': 'Увійти'}
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)}
-              style={{marginTop: 40, padding: '30px 100px'}}>
+              style={{marginTop: 40, padding: '0 100px'}}>
           <TextField
               error={Boolean(errors.login?.message)}
               helperText={errors.login?.message}
@@ -73,7 +90,7 @@ const Auth = () => {
                 <TextField
                     error={Boolean(errors.firstName?.message)}
                     helperText={errors.firstName?.message}
-                    {...register('firstName', {required: "Вкажіть ваше ім'я"})}
+                    {...register('firstName', {required: 'Вкажіть ваше ім\'я'})}
                     type={'text'}
                     sx={{marginTop: 2}}
                     label="Ваше ім'я"
@@ -82,7 +99,8 @@ const Auth = () => {
                 <TextField
                     error={Boolean(errors.lastName?.message)}
                     helperText={errors.lastName?.message}
-                    {...register('lastName', {required: "Вкажіть ваше прізвіще"})}
+                    {...register('lastName',
+                        {required: 'Вкажіть ваше прізвіще'})}
                     type={'text'}
                     sx={{marginTop: 2}}
                     label="Ваше прізвіще"
@@ -114,10 +132,12 @@ const Auth = () => {
               size="large"
               variant="contained"
               fullWidth>
-            {pathname === appConstants.PATH.REGISTRATION ? 'Зареєструватись' : 'Увійти'}
+            {pathname === appConstants.PATH.REGISTRATION ?
+                'Зареєструватись' :
+                'Увійти'}
           </Button>
         </form>
-      </div>
+      </>
   );
 };
 
