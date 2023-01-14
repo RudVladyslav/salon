@@ -1,7 +1,5 @@
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import {User} from '../models/models.js';
-import {where} from 'sequelize';
 
 class AdminController {
   async getAllWorkers(req, res, next) {

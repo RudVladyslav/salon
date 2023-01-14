@@ -37,7 +37,6 @@ const AddWorker = () => {
   const [defaultValue, setDefaultValue] = useState({});
 
   useEffect(() => {
-    console.log(id);
     if (editMode) {
       setDefaultValue(edit_default_value)
     }else{
@@ -83,6 +82,7 @@ const AddWorker = () => {
       }
     } else {
       try {
+        console.log(values);
         const {message} = await fetchUpdateWorker({...values, id});
         toast(message);
         navigate(appConstants.PATH.WORKERS)
@@ -142,7 +142,6 @@ const AddWorker = () => {
               type={'text'}
               sx={{marginTop: 2}}
               label="Прізвіще працівника"
-              name='firstName'
               fullWidth
           />
           <TextField
