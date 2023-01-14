@@ -11,8 +11,6 @@ import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {toast} from 'react-toastify';
-import consts from '../utils/consts';
-import {Link} from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
 
 const Workers = () => {

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import appConstants from '../utils/consts';
 import {TextField, Typography} from '@mui/material';
 import {useForm} from 'react-hook-form';
@@ -26,7 +26,7 @@ const defaultValuesLogin = Object.freeze({
 const Auth = () => {
   const {pathname} = useLocation();
   const {changeUser} = React.useContext(AppContext);
-
+  const navigate = useNavigate()
   const [defaultValues, setDefaultValues] = useState({})
 
   useEffect(() => {
@@ -48,12 +48,14 @@ const Auth = () => {
     if (pathname === appConstants.PATH.REGISTRATION) {
       const {data} = await fetchRegister(values);
       toast(data.message);
+      navigate(appConstants.PATH.LOGIN)
     } else {
       const {token} = await fetchAuthenticate(values)
       if (token) {
         window.localStorage.setItem('token', token)
         const {role} = await decodeToken(token)
         changeUser(role)
+        navigate(appConstants.PATH.MAIN_PAGE)
       }
     }
   };

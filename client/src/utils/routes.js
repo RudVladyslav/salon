@@ -24,4 +24,5 @@ export const workersPath = [
 export const clientsPath = [
   {path: appConstants.PATH.REVIEW, title: 'Відгуки', Component: Review},
   {path: appConstants.PATH.TO_ORDER, title: 'Записатись', Component: ToOrder},
+  {path: appConstants.PATH.TO_ORDER, title: 'Записатись', Component: ToOrder},
 ];

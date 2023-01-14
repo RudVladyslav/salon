@@ -96,8 +96,6 @@ const Review = () => {
                   </Card>
               ),
           )}
-
-
         </Container>
       </>
   );

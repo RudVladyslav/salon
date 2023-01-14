@@ -12,6 +12,7 @@ const appConstants = Object.freeze({
     EDIT_WORKER: '/edit_worker/:id',
     ORDERS:'/orders',
     TO_ORDER: 'to_order',
+    MAIN_PAGE: '/',
   }
 });
 
