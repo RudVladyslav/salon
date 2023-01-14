@@ -88,3 +88,12 @@ export const fetchCreateReview = async (values) => {
     console.log(error);
   }
 }
+
+export const fetchGetReviews = async () => {
+  try {
+    const {data} = await axios.get(`/review/`)
+    return data
+  } catch (error) {
+    console.log(error);
+  }
+}

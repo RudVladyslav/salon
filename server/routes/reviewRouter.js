@@ -2,7 +2,7 @@ import Router from 'express';
 import handleValidationErrors
   from '../middlewares/validationErrorMiddleware.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
-import ordersController from '../controllers/OrdersController.js';
+import ReviewsController from '../controllers/ReviewController.js'
 
 const reviewRouter = new Router();
 
@@ -10,14 +10,13 @@ reviewRouter.post(
     '/',
     handleValidationErrors,
     authMiddleware,
-    ordersController.createOrder,
+    ReviewsController.createReview,
 );
 
 reviewRouter.get(
     '/',
     handleValidationErrors,
-    authMiddleware,
-    ordersController.getOrders,
+    ReviewsController.getReviews,
 );
 
 export default reviewRouter;

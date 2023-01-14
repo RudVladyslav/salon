@@ -1,25 +1,21 @@
-import {Order, User} from '../models/models.js';
+import {Review, User} from '../models/models.js';
 
-class OrdersController {
-  async getOrders(req, res, next) {
+class ReviewsController {
+  async getReviews(req, res, next) {
     try {
-      const {id} = req.user;
-      const orders = await Order.findAll({
-        where: {
-          workerId: id,
-        },
+      const reviews = await Review.findAll({
         include: [
           {
             model: User,
             attributes: [
-              'firstName', 'lastName', 'phone', 'email',
+              'firstName', 'lastName'
             ],
           },
 
         ],
       });
 
-      res.status(201).json(orders);
+      res.status(201).json(reviews);
 
     } catch (e) {
       console.log(e);
@@ -27,15 +23,15 @@ class OrdersController {
     }
   }
 
-  async createOrder(req, res, next) {
+  async createReview(req, res, next) {
     try {
       const {id} = req.user;
-      const {workerId, date} = req.body;
+      const {workerId, reviewsText} = req.body;
 
-      await Order.create({
+      await Review.create({
         userId: id,
         workerId,
-        date,
+        text: reviewsText,
       });
 
       res.status(201).json({message: 'Дякуємо вам за заллишений відгук!'});
@@ -47,4 +43,4 @@ class OrdersController {
   }
 }
 
-export default new OrdersController();
+export default new ReviewsController();

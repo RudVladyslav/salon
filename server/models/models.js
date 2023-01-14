@@ -21,7 +21,6 @@ export const Order = sequelize.define('order', {
 
 export const Review = sequelize.define('review', {
   id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-  workerId: {type: DataTypes.INTEGER, allowNull: false},
   userId: {type: DataTypes.INTEGER, allowNull: false},
   text: {type: DataTypes.STRING, allowNull: false},
 });
