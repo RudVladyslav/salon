@@ -11,39 +11,43 @@ import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {toast} from 'react-toastify';
+import consts from '../utils/consts';
+import {Link} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 const Workers = () => {
 
-  const [workers, setWorkers] = useState([])
+  const [workers, setWorkers] = useState([]);
+  const navigate = useNavigate();
 
   const getWorkers = async () => {
-    try{
-      const data = await fetchGetWorkers()
-      setWorkers(data)
-    }catch (e) {
+    try {
+      const data = await fetchGetWorkers();
+      setWorkers(data);
+    } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   const onClickDeleteWorker = async (id) => {
-    try{
-      const {message} = await fetchDeleteWorkers(id)
-      const updatedWorkers = [...workers].filter(worker => worker.id !== id)
-      setWorkers(updatedWorkers)
+    try {
+      const {message} = await fetchDeleteWorkers(id);
+      const updatedWorkers = [...workers].filter(worker => worker.id !== id);
+      setWorkers(updatedWorkers);
       toast(message);
-    }catch (e) {
+    } catch (e) {
       console.log(e);
     }
 
-  }
+  };
 
-  const onClickEditWorker = () => {
-
-  }
+  const onClickEditWorker = (id) => {
+    navigate(`/edit_worker/${id}`);
+  };
 
   useEffect(() => {
-    getWorkers()
-  }, [])
+    getWorkers();
+  }, []);
 
   return (
       <div>
@@ -51,8 +55,8 @@ const Workers = () => {
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell align="center">Призвіще</TableCell>
                 <TableCell align="center">Ім'я</TableCell>
+                <TableCell align="center">Призвіще</TableCell>
                 <TableCell align="center">Номер телефону</TableCell>
                 <TableCell align="center">Ел. пошта</TableCell>
                 <TableCell align="center"></TableCell>
@@ -68,11 +72,14 @@ const Workers = () => {
                     <TableCell align="center">{row.phone}</TableCell>
                     <TableCell align="center">{row.email}</TableCell>
                     <TableCell align="center">
-                      <Button variant='outlined' color="error" sx={{ marginRight: 1 }} onClick={() => onClickDeleteWorker(row.id)}>
-                        <DeleteIcon />
+                      <Button variant="outlined" color="error"
+                              sx={{marginRight: 1}}
+                              onClick={() => onClickDeleteWorker(row.id)}>
+                        <DeleteIcon/>
                       </Button>
-                      <Button variant='outlined' color="warning">
-                        <EditIcon />
+                      <Button variant="outlined" color="warning"
+                              onClick={() => onClickEditWorker(row.id)}>
+                        <EditIcon/>
                       </Button>
                     </TableCell>
                   </TableRow>

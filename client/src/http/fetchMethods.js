@@ -26,9 +26,27 @@ export const fetchCreateWorker = async (values) => {
   }
 }
 
+export const fetchUpdateWorker = async (values) => {
+  try {
+    const {data} = await axios.patch('/admin/worker', values)
+    return data
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const fetchGetWorkers = async (values) => {
   try {
     const {data} = await axios.get('/admin/worker')
+    return data
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const fetchGetOneWorker = async (id) => {
+  try {
+    const {data} = await axios.get(`/admin/worker/${id}`)
     return data
   } catch (error) {
     console.log(error);

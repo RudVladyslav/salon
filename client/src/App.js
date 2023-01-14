@@ -8,6 +8,7 @@ import {adminsPath, clientsPath, publicPath, workersPath} from './utils/routes';
 import {decodeToken} from 'react-jwt';
 import consts from './utils/consts';
 import Alert from './components/alert';
+import AddWorker from './pages/AddWorker';
 
 function App() {
 const [user, setUser] = useState(consts.NONE)
@@ -65,7 +66,7 @@ const [user, setUser] = useState(consts.NONE)
                           ),
                       )
                   }
-                  {user === appConstants.ADMIN &&
+                  {user === appConstants.ADMIN && (
                       adminsPath.map(({path, title}) => (
                               <Link key={path} to={path}>
                                 <Button color="inherit">
@@ -74,6 +75,8 @@ const [user, setUser] = useState(consts.NONE)
                               </Link>
                           ),
                       )
+
+                  )
                   }
                   {user !== appConstants.NONE && (
                       <Button color="inherit" onClick={() => {
@@ -89,12 +92,13 @@ const [user, setUser] = useState(consts.NONE)
           </Box>
 
           <Routes>
-            {user === appConstants.ADMIN &&
-                adminsPath.map(({path, Component}) => (
+            <Route path={appConstants.PATH.EDIT_WORKER} key={appConstants.PATH.EDIT_WORKER} element={<AddWorker/>}/>
+            {user === appConstants.ADMIN
+                && adminsPath.map(({path, Component}) => (
                         <Route path={path} key={path} element={<Component/>}/>
-                    ),
-                )
+                    ))
             }
+
             {user === appConstants.WORKER &&
                 workersPath.map(({path, Component}) => (
                         <Route path={path} key={path} element={<Component/>}/>

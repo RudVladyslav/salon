@@ -1,36 +1,94 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {TextField, Typography} from '@mui/material';
 import appConstants from '../utils/consts';
 import Button from '@mui/material/Button';
 import {useForm} from 'react-hook-form';
-import {fetchCreateWorker} from '../http/fetchMethods';
+import {
+  fetchCreateWorker,
+  fetchGetOneWorker,
+  fetchUpdateWorker,
+} from '../http/fetchMethods';
 import {toast} from 'react-toastify';
+import {useLocation, useNavigate, useParams} from 'react-router-dom';
 
-const defaultValuesRegistration = Object.freeze({
+const create_default_value = {
   login: '',
   password: '',
   email: '',
   phone: '',
   firstName: '',
   lastName: '',
-});
+}
+
+const edit_default_value = {
+  email: '',
+  phone: '',
+  firstName: '',
+  lastName: '',
+}
 
 const AddWorker = () => {
+  const params = useParams();
+  const {pathname} = useLocation();
+  const {id} = useParams();
+  const editMode = pathname.includes('edit_worker');
+  const navigate = useNavigate()
+
+  const [defaultValue, setDefaultValue] = useState({});
+
+  useEffect(() => {
+    console.log(id);
+    if (editMode) {
+      setDefaultValue(edit_default_value)
+    }else{
+      setDefaultValue(create_default_value)
+    }
+  }, [editMode])
+
   const {
     register,
     handleSubmit,
+    setValue,
     formState: {errors, isValid},
   } = useForm({
-    defaultValuesRegistration,
+    defaultValue,
     mode: 'onChange',
   });
 
+  const fetchOneWorker = async () => {
+    const data = await fetchGetOneWorker(params.id);
+    setValue('firstName',data.firstName )
+    setValue('lastName',data.lastName )
+    setValue('phone',data.phone )
+    setValue('email',data.email )
+  };
+
+  useEffect(() => {
+    if (editMode) {
+      fetchOneWorker();
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log(defaultValue);
+  }, [defaultValue]);
+
   const onSubmit = async (values) => {
-    try {
-      const {message} = await fetchCreateWorker(values);
-      toast(message);
-    } catch (e) {
-      console.log(e);
+    if (!editMode) {
+      try {
+        const {message} = await fetchCreateWorker(values);
+        toast(message);
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      try {
+        const {message} = await fetchUpdateWorker({...values, id});
+        toast(message);
+        navigate(appConstants.PATH.WORKERS)
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
@@ -38,29 +96,35 @@ const AddWorker = () => {
       <>
         <Typography sx={{textAlign: 'center', marginTop: 2}} variant="h3"
                     component="h3">
-          {/*{pathname === appConstants.PATH.REGISTRATION ? 'Реєстрація': 'Увійти'}*/}
-          Додати працівника
+          {editMode ? 'Редагувати працівника' : 'Додати працівника'}
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)}
               style={{marginTop: 40, padding: '0 100px'}}>
-          <TextField
-              error={Boolean(errors.login?.message)}
-              helperText={errors.login?.message}
-              {...register('login', {required: 'Вкажіть логін працівника'})}
-              type={'login'}
-              sx={{marginTop: 2}}
-              label="Логін працівника"
-              fullWidth
-          />
-          <TextField
-              error={Boolean(errors.password?.message)}
-              helperText={errors.password?.message}
-              {...register('password', {required: 'Вкажіть пароль працівника'})}
-              type={'password'}
-              sx={{marginTop: 2}}
-              label="Пароль працівника"
-              fullWidth
-          />
+          {!editMode && (
+              <>
+                <TextField
+                    error={Boolean(errors.login?.message)}
+                    helperText={errors.login?.message}
+                    {...register('login',
+                        {required: 'Вкажіть логін працівника'})}
+                    type={'login'}
+                    sx={{marginTop: 2}}
+                    label="Логін працівника"
+                    fullWidth
+                />
+                <TextField
+                    error={Boolean(errors.password?.message)}
+                    helperText={errors.password?.message}
+                    {...register('password',
+                        {required: 'Вкажіть пароль працівника'})}
+                    type={'password'}
+                    sx={{marginTop: 2}}
+                    label="Пароль працівника"
+                    fullWidth
+                />
+              </>
+          )}
+
           <TextField
               error={Boolean(errors.firstName?.message)}
               helperText={errors.firstName?.message}
@@ -78,6 +142,7 @@ const AddWorker = () => {
               type={'text'}
               sx={{marginTop: 2}}
               label="Прізвіще працівника"
+              name='firstName'
               fullWidth
           />
           <TextField
@@ -95,6 +160,7 @@ const AddWorker = () => {
               {...register('email', {required: 'Вкажіть пошту працівника'})}
               type={'email'}
               sx={{marginTop: 2}}
+              name='email'
               label="E-mail працівника"
               fullWidth
           />
@@ -104,7 +170,7 @@ const AddWorker = () => {
               size="large"
               variant="contained"
               fullWidth>
-            Приєднати працівника до колективу
+            {editMode ? 'Редагувати дані працівника' : 'Приєднати працівника до колективу'}
           </Button>
         </form>
       </>

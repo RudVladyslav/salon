@@ -2,6 +2,7 @@ import Router from 'express';
 import authRouter from './authRouter.js';
 import adminRouter from './adminsRouter.js';
 import ordersRouter from './ordersRouter.js';
+import reviewRouter from './reviewRouter.js';
 
 const router = new Router();
 

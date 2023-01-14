@@ -17,6 +17,23 @@ class AdminController {
     }
   }
 
+  async getOneWorker(req, res, next) {
+    try {
+      const {id} = req.params
+
+      const worker = await User.findOne({
+        raw:true,
+        where: {id},
+        attributes:['lastName', 'firstName', 'phone', 'email']
+      });
+      res.status(201).json(worker);
+
+    } catch (e) {
+      console.log(e);
+      res.status(500).json({message: 'Не вдалось знайти користувача працівника'});
+    }
+  }
+
   async createWorker(req, res, next) {
     try {
       const {login, password, firstName, lastName, email, phone} = req.body;
@@ -52,25 +69,19 @@ class AdminController {
 
   async updateWorker(req, res, next) {
     try {
-      // const {id} = req.user;
-      //
-      // const user = await User.findOne({
-      //   where: {id: id}
-      // });
-      //
-      // user
-      //
-      // await User.create({
-      //   login,
-      //   password: hashPassword,
-      //   firstName,
-      //   lastName,
-      //   email,
-      //   phone,
-      //   role: 'WORKER',
-      // });
+      const {id, phone, email, lastName, firstName } = req.body
+      console.log(lastName);
+      const user = await User.findOne({
+        where: {id: id}
+      });
 
-      res.status(201).json({message: 'Рєстрація працівника успішна!'});
+      user.phone = phone
+      user.email = email
+      user.lastName = lastName
+      user.firstName = firstName
+      await user.save();
+
+      res.status(201).json({message: 'Дані оновлено'});
 
     } catch (e) {
       console.log(e);
