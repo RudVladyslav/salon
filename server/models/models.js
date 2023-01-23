@@ -25,10 +25,20 @@ export const Review = sequelize.define('review', {
   text: {type: DataTypes.STRING, allowNull: false},
 });
 
+export const Vacancy = sequelize.define('vacancy', {
+  id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+  userId: {type: DataTypes.INTEGER, allowNull: false},
+  title:{type: DataTypes.STRING, allowNull: false},
+  description: {type: DataTypes.STRING, allowNull: false},
+});
+
 User.hasMany(Order);
 Order.belongsTo(User);
 
 User.hasMany(Review);
 Review.belongsTo(User);
 
-export default {User, Review, Order};
+User.hasMany(Vacancy)
+Vacancy.belongsTo(User);
+
+export default {User, Review, Order, Vacancy};

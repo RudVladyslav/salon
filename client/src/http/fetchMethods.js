@@ -97,3 +97,27 @@ export const fetchGetReviews = async () => {
     console.log(error);
   }
 }
+export const fetchGetVacancy = async () => {
+  try {
+    const {data} = await axios.get(`/admin/vacancy/`)
+    return data
+  } catch (error) {
+    console.log(error);
+  }
+}
+export const fetchCreateVacancy = async (values) => {
+  try {
+    const {data} = await axios.post(`/admin/vacancy/`, values)
+    return data
+  } catch (error) {
+    console.log(error);
+  }
+}
+export const fetchDeleteVacancy = async (id) => {
+  try {
+    const {data} = await axios.delete(`/admin/vacancy/${id}`, )
+    return data
+  } catch (error) {
+    console.log(error);
+  }
+}

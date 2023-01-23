@@ -68,10 +68,6 @@ const AddWorker = () => {
     }
   }, []);
 
-  useEffect(() => {
-    console.log(defaultValue);
-  }, [defaultValue]);
-
   const onSubmit = async (values) => {
     if (!editMode) {
       try {

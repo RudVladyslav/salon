@@ -47,7 +47,6 @@ const Orders = () => {
                   <TableCell align="center">{row.user.phone}</TableCell>
                   <TableCell align="center">{row.user.email}</TableCell>
                   <TableCell align="center">{toUTCDate(row.date)}</TableCell>
-
                 </TableRow>
             ))}
           </TableBody>

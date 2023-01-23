@@ -13,6 +13,8 @@ const appConstants = Object.freeze({
     ORDERS:'/orders',
     TO_ORDER: 'to_order',
     MAIN_PAGE: '/',
+    ADD_VACANCY: 'add_vacancy',
+    VACANCIES: 'vacancies',
   }
 });
 
