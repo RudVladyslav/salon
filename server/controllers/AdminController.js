@@ -143,7 +143,11 @@ class AdminController {
   async getAllVacancy(req, res, next) {
     try {
       const vacancy = await Vacancy.findAll({
-        include: [User],
+        include: {
+          model: User,
+          attributes: ['email', 'phone'],
+        },
+
       });
       res.status(201).json(vacancy);
     } catch (e) {

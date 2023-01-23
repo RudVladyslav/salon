@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Card, Container, Typography} from '@mui/material';
+import {Box, Card, Container, Typography} from '@mui/material';
 import {fetchDeleteVacancy, fetchGetVacancy} from '../http/fetchMethods';
 import {AppContext} from '../index';
 import Button from '@mui/material/Button';
@@ -39,12 +39,20 @@ const Vacancies = () => {
           {vacancies.map(rev => (
                   <>
                     <Card sx={{padding: 2, marginTop: 1}}>
-                      <Typography variant="h5">
+                      <Typography variant="h4">
                         {rev.title}
                       </Typography>
                       <Typography variant="h6" component={'div'}>
                         {rev.description}
                       </Typography>
+                      <Box sx={{ textAlign: 'right' }}>
+                        <Typography variant="caption">
+                          Зв'язатись за тел {rev.user.phone}
+                        </Typography>
+                        <Typography variant="caption" component={'div'}>
+                          aбо {rev.user.email}
+                        </Typography>
+                      </Box>
                     </Card>
                     {
                         user === 'ADMIN' && (
